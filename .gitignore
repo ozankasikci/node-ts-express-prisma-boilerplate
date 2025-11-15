@@ -41,3 +41,5 @@ temp/
 
 # Prisma
 .migrate/
+specs/
+.claude/
