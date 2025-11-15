@@ -53,11 +53,13 @@ const limiter = rateLimit({
   max: config.rateLimit.max,
   standardHeaders: true,
   legacyHeaders: false,
-  store: new RedisStore({
-    // @ts-expect-error - Redis client type mismatch
-    client: redis,
-    prefix: 'rl:',
-  }),
+  // TODO: Fix RedisStore compatibility with ioredis v5
+  // Using in-memory store for now
+  // store: new RedisStore({
+  //   // @ts-expect-error - Redis client type mismatch
+  //   client: redis,
+  //   prefix: 'rl:',
+  // }),
   message: {
     error: {
       message: 'Too many requests, please try again later',
