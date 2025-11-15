@@ -1,5 +1,6 @@
 import pinoHttp from 'pino-http';
 import { logger } from '../lib/logger.js';
+import { config } from '../config/index.js';
 import { httpRequestDuration, httpRequestTotal } from '../lib/metrics.js';
 
 /**
@@ -8,7 +9,7 @@ import { httpRequestDuration, httpRequestTotal } from '../lib/metrics.js';
  */
 export const requestLogger = pinoHttp({
   logger,
-  autoLogging: true,
+  autoLogging: config.env !== 'test',
   customLogLevel: (req, res, err) => {
     if (res.statusCode >= 500 || err) {
       return 'error';

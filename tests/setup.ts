@@ -1,7 +1,7 @@
 // IMPORTANT: Set test DATABASE_URL before any imports
 process.env.NODE_ENV = 'test';
 process.env.DATABASE_URL = 'postgresql://postgres:postgres@localhost:5434/test_db';
-process.env.LOG_LEVEL = 'error'; // Valid enum: trace, debug, info, warn, error, fatal
+process.env.LOG_LEVEL = 'fatal'; // Valid enum: trace, debug, info, warn, error, fatal (fatal is highest/quietest)
 process.env.JWT_SECRET = 'test-secret-key-must-be-at-least-32-characters-long';
 process.env.REDIS_URL = 'redis://localhost:6379';
 
