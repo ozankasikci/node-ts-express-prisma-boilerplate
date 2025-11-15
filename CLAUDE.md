@@ -1,4 +1,4 @@
-# node-ts-express-prisma-template Development Guidelines
+# node-ts-express-prisma-boilerplate Development Guidelines
 
 Auto-generated from all feature plans. Last updated: 2025-11-15
 

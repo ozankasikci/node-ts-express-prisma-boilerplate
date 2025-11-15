@@ -1,6 +1,6 @@
-# Node.js TypeScript Express Prisma Template
+# Node.js TypeScript Express Prisma Boilerplate
 
-A production-ready Node.js template project with TypeScript, Express 5, Prisma ORM, Redis, BullMQ, and comprehensive middleware stack.
+A production-ready Node.js boilerplate with TypeScript, Express 5, Prisma ORM, Redis, BullMQ, and comprehensive middleware stack.
 
 ## Features
 

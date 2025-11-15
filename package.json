@@ -1,7 +1,7 @@
 {
-  "name": "node-ts-express-prisma-template",
+  "name": "node-ts-express-prisma-boilerplate",
   "version": "1.0.0",
-  "description": "Production-ready Node.js template with TypeScript, Express, Prisma, Redis, and BullMQ",
+  "description": "Production-ready Node.js boilerplate with TypeScript, Express, Prisma, Redis, and BullMQ",
   "type": "module",
   "main": "dist/server.js",
   "engines": {

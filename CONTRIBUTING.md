@@ -7,7 +7,7 @@ Thank you for considering contributing to this template project!
 1. **Fork and clone the repository**
    ```bash
    git clone <your-fork-url>
-   cd node-ts-express-prisma-template
+   cd node-ts-express-prisma-boilerplate
    ```
 
 2. **Install dependencies**
