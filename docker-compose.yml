@@ -1,7 +1,0 @@
-# This file exists for convenience - it proxies to the actual docker-compose file
-# Run: docker-compose up -d
-# Or use: docker-compose -f docker/docker-compose.yml up -d
-
-version: '3.8'
-include:
-  - docker/docker-compose.yml

@@ -17,7 +17,8 @@ Thank you for considering contributing to this template project!
 
 3. **Start local services**
    ```bash
-   docker-compose -f docker/docker-compose.yml up -d
+   cd docker && docker-compose up -d
+   # Or from root: docker-compose -f docker/docker-compose.yml up -d
    ```
 
 4. **Set up environment**
