@@ -1,0 +1,111 @@
+// Prisma schema for Node.js template project
+// See data-model.md for detailed entity specifications
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserStatus {
+  ACTIVE
+  DELETED
+}
+
+enum TaskStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+// User model
+model User {
+  id                   String                @id @default(uuid())
+  email                String                @unique
+  password             String
+  name                 String
+  status               UserStatus            @default(ACTIVE)
+  emailVerified        Boolean               @default(false)
+  failedLoginAttempts  Int                   @default(0)
+  lastFailedLoginAt    DateTime?
+  lockedUntil          DateTime?
+  lastLoginAt          DateTime?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  deletedAt            DateTime?
+
+  // Relationships
+  passwordResetTokens  PasswordResetToken[]
+  tasks                Task[]
+
+  @@index([email, status])
+  @@index([lockedUntil])
+  @@map("users")
+}
+
+// Task model for background jobs
+model Task {
+  id              String      @id @default(uuid())
+  type            String
+  userId          String
+  parameters      Json
+  status          TaskStatus  @default(QUEUED)
+  priority        Int         @default(0)
+  progress        Int         @default(0)
+  errorMessage    String?
+  retryCount      Int         @default(0)
+  submittedAt     DateTime    @default(now())
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relationships
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  result          TaskResult?
+
+  @@index([userId, status])
+  @@index([status, submittedAt])
+  @@index([completedAt])
+  @@map("tasks")
+}
+
+// Task result model
+model TaskResult {
+  id            String    @id @default(uuid())
+  taskId        String    @unique
+  outputPath    String
+  metadata      Json
+  storageSize   BigInt
+  createdAt     DateTime  @default(now())
+  expiresAt     DateTime
+
+  // Relationships
+  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@map("task_results")
+}
+
+// Password reset token model
+model PasswordResetToken {
+  id          String    @id @default(uuid())
+  userId      String
+  token       String    @unique
+  expiresAt   DateTime
+  used        Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  // Relationships
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, used])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
