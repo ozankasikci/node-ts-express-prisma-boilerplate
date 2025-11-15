@@ -18,10 +18,10 @@ export default defineConfig({
         '**/*.d.ts',
       ],
       thresholds: {
-        lines: 70,
-        functions: 70,
+        lines: 80,
+        functions: 75,
         branches: 70,
-        statements: 70,
+        statements: 80,
       },
     },
     testTimeout: 10000,
