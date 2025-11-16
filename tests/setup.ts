@@ -4,6 +4,7 @@ process.env.DATABASE_URL = 'postgresql://postgres:postgres@localhost:5434/test_d
 process.env.LOG_LEVEL = 'fatal'; // Valid enum: trace, debug, info, warn, error, fatal (fatal is highest/quietest)
 process.env.JWT_SECRET = 'test-secret-key-must-be-at-least-32-characters-long';
 process.env.REDIS_URL = 'redis://localhost:6379';
+process.env.CONFIG_ENCRYPTION_KEY = 'TnLiHyYNuboynP/t2+mZAj3QLrIgX8zS12hGPqVELH0='; // base64 encoded 32-byte key for tests
 
 import { beforeAll, afterAll, beforeEach, vi } from 'vitest';
 import { PrismaClient } from '@prisma/client';
@@ -100,6 +101,8 @@ beforeAll(async () => {
 beforeEach(async () => {
   // Clean database before each test
   // Delete in reverse order of dependencies
+  await prisma.configHistory.deleteMany();
+  await prisma.systemConfig.deleteMany();
   await prisma.taskResult.deleteMany();
   await prisma.task.deleteMany();
   await prisma.passwordResetToken.deleteMany();

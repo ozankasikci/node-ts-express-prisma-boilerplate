@@ -45,6 +45,27 @@ export const queueJobsTotal = new client.Counter({
 });
 
 /**
+ * Remote Configuration Metrics
+ */
+export const configOperationsTotal = new client.Counter({
+  name: 'config_operations_total',
+  help: 'Total number of configuration operations',
+  labelNames: ['operation', 'status'],
+});
+
+export const configEncryptionOperationsTotal = new client.Counter({
+  name: 'config_encryption_operations_total',
+  help: 'Total number of encryption/decryption operations',
+  labelNames: ['operation', 'status'],
+});
+
+export const configValidationTotal = new client.Counter({
+  name: 'config_validation_total',
+  help: 'Total number of configuration validations',
+  labelNames: ['status'],
+});
+
+/**
  * Get metrics in Prometheus format
  */
 export async function getMetrics(): Promise<string> {

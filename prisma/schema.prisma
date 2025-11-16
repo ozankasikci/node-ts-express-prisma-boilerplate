@@ -109,3 +109,53 @@ model PasswordResetToken {
   @@index([expiresAt])
   @@map("password_reset_tokens")
 }
+
+// Remote Configuration models
+
+// System configuration model
+model SystemConfig {
+  id               String          @id @default(uuid())
+  category         String
+  key              String
+  value            String          @db.Text
+  isSensitive      Boolean         @default(false)
+  isProtected      Boolean         @default(false)
+  enabled          Boolean         @default(true)
+  description      String?         @db.Text
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  createdBy        String?
+  updatedBy        String?
+  lastValidatedAt  DateTime?
+  validationStatus String?
+  validationError  String?         @db.Text
+
+  // Relationships
+  history          ConfigHistory[]
+
+  @@unique([category, key])
+  @@index([category])
+  @@index([category, enabled])
+  @@index([updatedAt])
+  @@map("system_config")
+}
+
+// Configuration change history model
+model ConfigHistory {
+  id            String       @id @default(uuid())
+  configId      String
+  action        String
+  previousValue String?      @db.Text
+  newValue      String?      @db.Text
+  changedAt     DateTime     @default(now())
+  changedBy     String?
+  reason        String?      @db.Text
+
+  // Relationships
+  config        SystemConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([configId])
+  @@index([changedAt])
+  @@index([changedBy])
+  @@map("config_history")
+}
